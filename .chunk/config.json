@@ -1,0 +1,44 @@
+{
+  "commands": [
+    {
+      "name": "install",
+      "run": "npm ci"
+    },
+    {
+      "name": "test",
+      "run": "npx vitest run --reporter=default --reporter=junit --outputFile.junit=reports/unit/junit.xml",
+      "role": "gate",
+      "timeout": 300
+    },
+    {
+      "name": "lint",
+      "run": "npm run lint",
+      "role": "gate",
+      "timeout": 60
+    }
+  ],
+  "vcs": {
+    "org": "joaquin-sm-cci",
+    "repo": "michimax"
+  },
+  "orgID": "70818040-6e1c-47f9-9d52-47a61281bd5a",
+  "environment": {
+    "stack": "typescript",
+    "setup": [
+      {
+        "name": "system",
+        "command": "curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt-get install -y nodejs --no-install-recommends && sudo rm -rf /var/lib/apt/lists/*"
+      },
+      {
+        "name": "install",
+        "command": "npm install"
+      },
+      {
+        "name": "playwright-install",
+        "command": "npx playwright install --with-deps"
+      }
+    ],
+    "image": "cimg/node",
+    "image_version": "22.23"
+  }
+}
